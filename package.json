@@ -1,17 +1,28 @@
 {
   "name": "data-syncbig-admin",
   "version": "0.1.0",
+  "config": {
+    "coreui_library_short_version": "4.0"
+  },
   "private": true,
   "dependencies": {
+    "@coreui/coreui": "^4.0.4",
+    "@coreui/icons": "^2.0.1",
+    "@coreui/icons-react": "^1.1.0",
+    "@coreui/react": "^4.0.0-rc.4",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "admin-lte": "^3.0.5",
+    "material-ui": "^0.20.2",
     "prop-types": "^15.7.2",
+    "query-string": "^7.0.1",
     "ra-data-json-server": "^3.18.3",
     "react": "^17.0.2",
     "react-admin": "^3.18.3",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "react-select": "^5.1.0",
     "web-vitals": "^1.1.2",
     "yarn": "^1.22.15"
   },
