@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {CButton, CCol, CContainer, CRow} from "@coreui/react";
 import Select from "react-select";
-import {getInfo} from "../services/dataProvider";
+import {getAllList} from "../services/dataProvider";
 import {MDBDataTable} from "mdbreact";
 
 
@@ -28,7 +28,7 @@ class DiffAndTransfer extends React.Component {
     };
 
     getDiffStatus = async () => {
-        const response = await getInfo("envInfo");
+        const response = await getAllList("envInfo");
         console.log(`getData : `, response);
         this.setState({envInfos: response}, () =>
             console.log(`envInfo : `, this.state.envInfos)
@@ -86,41 +86,6 @@ class DiffAndTransfer extends React.Component {
                             <CButton color="secondary" onClick={this.getDiffStatus}>diff status</CButton>
                         </CCol>
                     </CRow>
-                    {/*<CRow>*/}
-                    {/*    <CTable>*/}
-                    {/*        <CTableHead>*/}
-                    {/*            <CTableRow>*/}
-                    {/*                <CTableHeaderCell scope="col">id</CTableHeaderCell>*/}
-                    {/*                <CTableHeaderCell scope="col">env</CTableHeaderCell>*/}
-                    {/*                <CTableHeaderCell scope="col">url</CTableHeaderCell>*/}
-                    {/*            </CTableRow>*/}
-                    {/*        </CTableHead>*/}
-
-                    {/*        <CTableBody>*/}
-                    {/*            {this.state.envInfos.map((envInfo) => (*/}
-                    {/*                <CTableRow>*/}
-                    {/*                    <CTableHeaderCell scope="row">{envInfo.id}</CTableHeaderCell>*/}
-                    {/*                    <CTableDataCell>{envInfo.env}</CTableDataCell>*/}
-                    {/*                    <CTableDataCell>{envInfo.url}</CTableDataCell>*/}
-                    {/*                </CTableRow>*/}
-                    {/*            ))}*/}
-                    {/*        </CTableBody>*/}
-                    {/*    </CTable>*/}
-                    {/*</CRow>*/}
-
-                    {/*<CRow>*/}
-                    {/*    <CPagination aria-label="Page navigation example">*/}
-                    {/*        <CPaginationItem aria-label="Previous">*/}
-                    {/*            <span aria-hidden="true">&laquo;</span>*/}
-                    {/*        </CPaginationItem>*/}
-                    {/*        <CPaginationItem>1</CPaginationItem>*/}
-                    {/*        <CPaginationItem>2</CPaginationItem>*/}
-                    {/*        <CPaginationItem>3</CPaginationItem>*/}
-                    {/*        <CPaginationItem aria-label="Next">*/}
-                    {/*            <span aria-hidden="true">&raquo;</span>*/}
-                    {/*        </CPaginationItem>*/}
-                    {/*    </CPagination>*/}
-                    {/*</CRow>*/}
                 </CContainer>
 
                 <MDBDataTable

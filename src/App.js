@@ -1,12 +1,29 @@
 import './App.css';
 import * as React from "react";
-import DiffAndTransfer from "./component/DiffAndTransfer";
+import {Component} from "react";
 import './scss/style.scss'
+import DefaultLayout from "./layout/DefaultLayout";
+import {HashRouter, Route, Switch} from "react-router-dom";
 
-function App() {
-    return (
-        <DiffAndTransfer/>
-    );
+const loading = (
+    <div className="pt-3 text-center">
+        <div className="sk-spinner sk-spinner-pulse"></div>
+    </div>
+)
+
+class App extends Component {
+    render() {
+        return (
+            <HashRouter>
+                <React.Suspense fallback={loading}>
+                    <Switch>
+                        <Route path="/" name="Home" render={(props) => <DefaultLayout {...props} />}/>
+                    </Switch>
+                </React.Suspense>
+            </HashRouter>
+        );
+    }
 }
+
 
 export default App;
