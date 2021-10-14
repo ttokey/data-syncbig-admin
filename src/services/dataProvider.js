@@ -9,3 +9,19 @@ export const getAllList = async (env) => {
     );
     return response.data;
 };
+
+export const putData = async (env, id, data) => {
+    const response = await axios.put(
+        `${apiUrl}/${env}/${id}`,
+        data,
+    )
+    return response.data;
+}
+
+export const postData = async (env, data) => {
+    const response = await axios.post(
+        `${apiUrl}/${env}`,
+        data,
+    )
+    return response.data;
+}

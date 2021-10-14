@@ -72,7 +72,8 @@ class DiffAndTransfer extends React.Component {
                         <CCol xs={{span: 6}}>
                             <Select
                                 onChange={this.handleSourceChange}
-                                options={options}/>
+                                options={options}
+                            />
                         </CCol>
                         <CCol xs={{span: 6}}>
                             <div>target</div>
@@ -80,7 +81,8 @@ class DiffAndTransfer extends React.Component {
                         <CCol xs={{span: 6}}>
                             <Select
                                 onChange={this.handleTargetChange}
-                                options={options}/>
+                                options={options}
+                            />
                         </CCol>
                         <CCol xs={{span: 6}}>
                             <CButton color="secondary" onClick={this.getDiffStatus}>diff status</CButton>
