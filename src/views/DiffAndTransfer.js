@@ -1,110 +1,143 @@
 import * as React from 'react';
 import {CButton, CCol, CContainer, CRow} from "@coreui/react";
+import {getDiffStatusList} from "../services/dataProvider";
+import {MDBDataTableV5} from "mdbreact";
+import {useState} from "react";
 import Select from "react-select";
-import {getAllList} from "../services/dataProvider";
-import {MDBDataTable} from "mdbreact";
 
 
-class DiffAndTransfer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedSource: "dev",
-            selectedTarget: "dev",
-            envInfos: [],
-        }
+const DiffAndTransfer = () => {
+    const [column, setColumn] = useState([]);
+    const [diffStatus, setDiffStatus] = useState([]);
+    const [collection, setCollection] = useState();
+    const [sourceEnv, setSourceEnv] = useState();
+    const [targetEnv, setTargetEnv] = useState();
+
+    const handleSelect = (value, setFunction) => {
+        setFunction(value.value);
+        console.log(collection);
     };
 
-    handleSourceChange = (value) => {
-        this.setState({selectedSource: value.value}, () =>
-            console.log(`selectedSource : `, this.state.selectedSource, this.state.selectedTarget)
-        );
+    const getDiffStatus = async () => {
+        const response = await getDiffStatusList(collection, sourceEnv, targetEnv);
+        console.log(response);
+        setDiffStatus(response);
+
+        // transColumn(response);
     };
 
-    handleTargetChange = (value) => {
-        this.setState({selectedTarget: value.value}, () =>
-            console.log(`selectedSource : `, this.state.selectedSource, this.state.selectedTarget)
-        );
-    };
+    const transColumn = (response) => {
+        let toColumn = [
+            {
+                label: 'id',
+                field: 'id',
+                sort: 'asc',
+                width: 300
+            },
+        ]
 
-    getDiffStatus = async () => {
-        const response = await getAllList("envInfo");
-        console.log(`getData : `, response);
-        this.setState({envInfos: response}, () =>
-            console.log(`envInfo : `, this.state.envInfos)
-        );
-        console.log(`size : `, this.state.envInfos.length);
+        console.log(response.keys())
     }
 
+    const data = {
+        columns: [
+            {
+                label: 'id',
+                field: 'id',
+                sort: 'asc',
+                width: 200
+            },
+            {
+                label: 'nluId',
+                field: 'fields.nluId',
+                sort: 'asc',
+                width: 200
+            },
+            {
+                label: 'confidenceCutScore',
+                field: 'fields.confidenceCutScore',
+                sort: 'asc',
+                width: 200
+            },
+            {
+                label: 'url',
+                field: 'status',
+                sort: 'asc',
+                width: 200
+            },
+        ],
+        rows: diffStatus
+    };
 
-    render() {
-        const data = {
-            columns: [
-                {
-                    label: 'id',
-                    field: 'id',
-                    sort: 'asc',
-                    width: 300
-                },
-                {
-                    label: 'env',
-                    field: 'env',
-                    sort: 'asc',
-                    width: 270
-                },
-                {
-                    label: 'url',
-                    field: 'url',
-                    sort: 'asc',
-                    width: 200
-                }
-            ],
-            rows: this.state.envInfos
-        }
+    const [checkbox1, setCheckbox1] = useState([]);
 
-        return (
-            <div>
-                <CContainer>
-                    <CRow xs={{gutter: 2}}>
-                        <CCol xs={{span: 6}}>
-                            <div>source</div>
-                        </CCol>
-                        <CCol xs={{span: 6}}>
-                            <Select
-                                onChange={this.handleSourceChange}
-                                options={options}
-                            />
-                        </CCol>
-                        <CCol xs={{span: 6}}>
-                            <div>target</div>
-                        </CCol>
-                        <CCol xs={{span: 6}}>
-                            <Select
-                                onChange={this.handleTargetChange}
-                                options={options}
-                            />
-                        </CCol>
-                        <CCol xs={{span: 6}}>
-                            <CButton color="secondary" onClick={this.getDiffStatus}>diff status</CButton>
-                        </CCol>
-                    </CRow>
-                </CContainer>
+    const showLogs2 = (e) => {
+        setCheckbox1(e);
+    };
 
-                <MDBDataTable
-                    striped
-                    bordered
-                    small
-                    data={data}
-                />
-            </div>
-        );
-    }
+    return (
+        <CContainer>
+            <CRow>
+                <CCol md={2}>
+                    <div>collection</div>
+                    <Select
+                        onChange={(value) => handleSelect(value, setCollection)}
+                        options={collectionOption}
+                    />
+                </CCol>
+                <CCol md={2}>
+                    <div>source</div>
+                    <Select
+                        onChange={(value) => handleSelect(value, setSourceEnv)}
+                        options={envOption}
+                    />
+                </CCol>
+                <CCol md={2}>
+                    <div>target</div>
+                    <Select
+                        onChange={(value) => handleSelect(value, setTargetEnv)}
+                        options={envOption}
+                    />
+                </CCol>
+                <CCol md={2}>
+                    <CButton color="secondary" onClick={getDiffStatus}>diff status</CButton>
+                </CCol>
+            </CRow>
+
+            <MDBDataTableV5
+                striped
+                bordered
+                hover
+                data={data}
+
+                checkbox
+                headCheckboxID='id6'
+                bodyCheckboxID='checkboxes6'
+                getValueCheckBox={(e) => {
+                    showLogs2(e);
+                }}
+                getValueAllCheckBoxes={(e) => {
+                    showLogs2(e);
+                }}
+                multipleCheckboxes
+            />
+        </CContainer>
+    );
 }
 
-const options = [
+
+const collectionOption = [
+    {value: "nlu", label: "nlu"},
+    {value: "view", label: "view"},
+    {value: "control", label: "control"},
+];
+
+const envOption = [
+    {value: "local", label: "local"},
+    {value: "local2", label: "local2"},
     {value: "dev", label: "dev"},
     {value: "test", label: "test"},
     {value: "prod", label: "prod"},
-]
+];
 
 export default DiffAndTransfer;

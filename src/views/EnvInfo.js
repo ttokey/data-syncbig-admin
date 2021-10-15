@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {getAllList} from "../services/dataProvider";
+import './EnvInfo.css'
+import {CButton, CCol, CContainer, CFormSelect, CRow} from "@coreui/react";
 import {AgGridColumn, AgGridReact} from "ag-grid-react";
-import {CButton, CCol, CContainer, CFormLabel, CRow} from "@coreui/react";
 import EnvInfoModal from "./EnvInfoModal";
-import Select from "react-select";
 
 
 const EnvInfo = () => {
@@ -49,41 +49,51 @@ const EnvInfo = () => {
         {value: 50, label: 50},
     ];
 
+    const cFormOptions = `
+    <option value="10">10</option>
+    <option value="20">20</option>
+    <option value="50">30</option>`;
+
     const handlePageSizeChange = (value) => {
         setPageSize(value.value);
     };
 
     return (
         <CContainer>
-            <CRow className="justify-content-end">
-                <CCol className="align-self-end">
-                    <CButton color="light" size={"sm"} onClick={onButtonClickCreate}>create</CButton>
-                </CCol>
-                <CCol className="align-self-end">
-                    <CButton color="light" size={"sm"} onClick={onButtonClick}>delete</CButton>
-                </CCol>
-            </CRow>
-            <CRow>
-                <CCol md={2}>
-                    <CFormLabel>page size = </CFormLabel>
-                </CCol>
-                <CCol md={2}>
-                    <Select
-                        onChange={(event) => handlePageSizeChange(event)}
-                        options={options}
-                        defaultValue={pageSize}
-                    />
-                </CCol>
+            <CRow xs={{gutter: 0}}>
+                <CCol md={1} className="align-self-end">
+                    <div>
+                        page
+                    </div>
 
+                </CCol>
+                <CCol md={2}>
+                    <CFormSelect
+                        size='sm'
+                        onChange={(event) => handlePageSizeChange(event)}
+                        value={pageSize}
+                    >
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                    </CFormSelect>
+                </CCol>
+                <CCol md={{span: 4, offset: 4}} className="align-self-end">
+                    <div d-grid gap-2 className="d-md-block">
+                        <CButton color="primary" size="sm" onClick={onButtonClickCreate}>create</CButton>
+                        <CButton color="light" size="sm" onClick={onButtonClick}>delete</CButton>
+                    </div>
+                </CCol>
             </CRow>
-            <div style={{height: 'calc(100% - 25px)'}}>
-                <div className="ag-theme-alpine" style={{height: "100%", width: "100%"}}>
+
+            <CRow>
+                <div className="ag-theme-alpine" style={{height: 500, width: 1000}}>
                     <AgGridReact
                         ref={gridRef}
                         rowData={rowData}
                         rowSelection={'multiple'}
                         onRowSelected={onRowSelected}
-                        paginationPageSize={10}
+                        paginationPageSize={pageSize}
                         pagination={true}
                     >
                         <AgGridColumn
@@ -93,9 +103,7 @@ const EnvInfo = () => {
                             checkboxSelection={true}
                             headerCheckboxSelection={true}
                             headerCheckboxSelectionFilteredOnly={true}
-
-                        >
-                        </AgGridColumn>
+                        />
                         <AgGridColumn field="env" sortable={true} filter={true}></AgGridColumn>
                         <AgGridColumn field="url" sortable={true} filter={true}></AgGridColumn>
                     </AgGridReact>
@@ -108,7 +116,7 @@ const EnvInfo = () => {
                         env={"envInfo"}
                     />
                 </div>
-            </div>
+            </CRow>
 
         </CContainer>
     )

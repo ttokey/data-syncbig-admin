@@ -7,6 +7,7 @@ import {Provider} from 'react-redux'
 import store from "./store";
 import 'react-app-polyfill/stable'
 import 'core-js'
+
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
