@@ -502,10 +502,10 @@ const ApiInfo = () => {
             },
         ],
     });
-    const [checkbox1, setCheckbox1] = React.useState([]);
+    // const [checkbox1, setCheckbox1] = React.useState([]);
 
     const showLogs2 = (e) => {
-        setCheckbox1(e);
+        // setCheckbox1(e);
     };
 
     return (
