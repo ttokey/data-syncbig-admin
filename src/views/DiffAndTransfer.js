@@ -1,21 +1,28 @@
 import * as React from 'react';
-import {CButton, CCol, CContainer, CRow} from "@coreui/react";
+import {CButton, CCol, CContainer, CFormSelect, CRow} from "@coreui/react";
 import {getDiffStatusList} from "../services/dataProvider";
 import {MDBDataTableV5} from "mdbreact";
 import {useState} from "react";
 import Select from "react-select";
 
 
-const DiffAndTransfer = () => {
+const DiffAndTransfer = (props) => {
     const [column, setColumn] = useState([]);
     const [diffStatus, setDiffStatus] = useState([]);
-    const [collection, setCollection] = useState();
-    const [sourceEnv, setSourceEnv] = useState();
-    const [targetEnv, setTargetEnv] = useState();
+    const [collection, setCollection] = useState("nlu");
+    const [sourceEnv, setSourceEnv] = useState("local");
+    const [targetEnv, setTargetEnv] = useState("local");
 
     const handleSelect = (value, setFunction) => {
-        setFunction(value.value);
-        console.log(collection);
+
+        // setFunction(value.target.value);
+        setCollection(value.target.value);
+        console.log(value.target.value);
+        // setCollection(value.realValue)
+        // console.log(setFunction);
+        // console.log("collection : {}, sourceEnv : {}, targetEnv : {}", collection, sourceEnv, targetEnv);
+        // setSourceEnv("hi");
+
     };
 
     const getDiffStatus = async () => {
@@ -80,24 +87,46 @@ const DiffAndTransfer = () => {
             <CRow>
                 <CCol md={2}>
                     <div>collection</div>
-                    <Select
+                    <CFormSelect
                         onChange={(value) => handleSelect(value, setCollection)}
-                        options={collectionOption}
-                    />
+                    >
+                        <option value="nlu">nlu</option>
+                        <option value="view">view</option>
+                        <option value="control">control</option>
+                    </CFormSelect>
+                    {/*<Select*/}
+                    {/*    onChange={(value) => handleSelect(value, setCollection)}*/}
+                    {/*    options={collectionOption}*/}
+                    {/*/>*/}
+
                 </CCol>
                 <CCol md={2}>
                     <div>source</div>
-                    <Select
+                    <CFormSelect
                         onChange={(value) => handleSelect(value, setSourceEnv)}
-                        options={envOption}
-                    />
+                        defaultValue={sourceEnv}
+                    >
+                        <option value="local">local</option>
+                        <option value="local2">local2</option>
+                    </CFormSelect>
+                    {/*<Select*/}
+                    {/*    onChange={(value) => handleSelect(value, setSourceEnv)}*/}
+                    {/*    options={envOption}*/}
+                    {/*/>*/}
                 </CCol>
                 <CCol md={2}>
                     <div>target</div>
-                    <Select
+                    <CFormSelect
                         onChange={(value) => handleSelect(value, setTargetEnv)}
-                        options={envOption}
-                    />
+                        defaultValue={targetEnv}
+                    >
+                        <option value="local">local</option>
+                        <option value="local2">local2</option>
+                    </CFormSelect>
+                    {/*<Select*/}
+                    {/*    onChange={(value) => handleSelect(value, setTargetEnv)}*/}
+                    {/*    options={envOption}*/}
+                    {/*/>*/}
                 </CCol>
                 <CCol md={2}>
                     <CButton color="secondary" onClick={getDiffStatus}>diff status</CButton>
@@ -127,17 +156,17 @@ const DiffAndTransfer = () => {
 
 
 const collectionOption = [
-    {value: "nlu", label: "nlu"},
-    {value: "view", label: "view"},
-    {value: "control", label: "control"},
+    {value: "nlu", label: "nlu", realValue: "nlu"},
+    {value: "view", label: "view", realValue: "view"},
+    {value: "control", label: "control", realValue: "control"},
 ];
 
 const envOption = [
-    {value: "local", label: "local"},
-    {value: "local2", label: "local2"},
-    {value: "dev", label: "dev"},
-    {value: "test", label: "test"},
-    {value: "prod", label: "prod"},
+    {value: "local", label: "local", realValue: "local"},
+    {value: "local2", label: "local2", realValue: "local2"},
+    {value: "dev", label: "dev", realValue: "dev"},
+    {value: "test", label: "test", realValue: "test"},
+    {value: "prod", label: "prod", realValue: "prod"},
 ];
 
 export default DiffAndTransfer;

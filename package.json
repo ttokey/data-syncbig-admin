@@ -20,6 +20,7 @@
     "ag-grid-community": "^26.1.0",
     "ag-grid-react": "^26.1.0",
     "axios": "^0.22.0",
+    "core-js": "^3.18.3",
     "material-ui": "^0.20.2",
     "mdbreact": "^5.1.0",
     "node-sass": "^6.0.1",

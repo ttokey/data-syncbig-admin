@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DiffAndTransfer = React.lazy(() => import('./views/DiffAndTransfer'))
+const DiffAndTransfer = React.lazy(() => import('./views/DiffAndTransfer2'))
 const ApiInfo = React.lazy(() => import('./views/ApiInfo'))
 const EnvInfo = React.lazy(() => import('./views/EnvInfo'))
 const Rollback = React.lazy(() => import('./views/Rollback'))
